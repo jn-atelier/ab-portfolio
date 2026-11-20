@@ -1,0 +1,50 @@
+name: Test and Deploy MkDocs Site
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js for Markdownlint
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run markdownlint
+        run: |
+          npm install -g markdownlint-cli2
+          markdownlint-cli2 "docs/**/*.md" "README.md" || true
+
+      - name: Check links with Lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --exclude-mail --no-progress docs/ README.md
+          fail: false
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install MkDocs and dependencies
+        run: |
+          pip install --upgrade pip
+          pip install mkdocs mkdocs-material mkdocs-minify-plugin pymdown-extensions
+
+      - name: Build and deploy site
+        run: mkdocs gh-deploy --force
