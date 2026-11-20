@@ -1,6 +1,6 @@
 # About Me
 
-Hi! I'm **JNAtelier**, a ** Technical Writer / Junior Developer / Data Analyst** passionate about turning complex concepts into clear, accessible, and user-friendly solutions.
+Hi! I'm **JNAtelier**, a **Technical Writer / Junior Developer / Data Analyst** passionate about turning complex concepts into clear, accessible, and user-friendly solutions.
 
 !!! info "Currently"
     I am building my **Docs-as-Code** portfolio and exploring modern documentation workflows, automation, and web technologies.
